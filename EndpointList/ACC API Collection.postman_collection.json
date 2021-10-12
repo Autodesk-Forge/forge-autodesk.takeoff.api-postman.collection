@@ -1,0 +1,989 @@
+{
+	"info": {
+		"_postman_id": "fd1a38cb-e5a0-4513-b3e2-2dbb6ded9aca",
+		"name": "ACC API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ACC Takeoff APIs",
+			"item": [
+				{
+					"name": "Run Firstly-Get Project ID",
+					"item": [
+						{
+							"name": "GET one ACC account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// setup the environment variable \"hub_id\" and \"account_id\" by hub_name",
+											"const hub_name = pm.environment.get(\"hub_name\");",
+											"pm.test(\"find matches account by name: \" + hub_name, function () {",
+											"    const body = JSON.parse(responseBody);",
+											"    const found = body.data.find(d => d.attributes.name == hub_name);",
+											"",
+											"    pm.expect(found).to.not.be.undefined;",
+											"    ",
+											"    pm.environment.set(\"hub_id\", found.id);",
+											"    pm.environment.set(\"account_id\", found.id.split(\"b.\").join(\"\"));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_domain}}/project/v1/hubs",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"project",
+										"v1",
+										"hubs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET one ACC project",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"const project_name =  pm.environment.get(\"project_name\");",
+											"pm.test(\"find matches project by name: \" + project_name, function () {",
+											"    const body = JSON.parse(responseBody);",
+											"    const found = body.data.find(d => d.attributes.name == project_name)",
+											"",
+											"    pm.expect(found).to.not.be.undefined;",
+											"    ",
+											"    postman.setEnvironmentVariable(\"project_id\", found.id);",
+											"    postman.setEnvironmentVariable(\"project_id_without_b\", found.id.split(\"b.\").join(\"\"));    ",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_domain}}/project/v1/hubs/:hub_id/projects?page[limit]=200",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"project",
+										"v1",
+										"hubs",
+										":hub_id",
+										"projects"
+									],
+									"query": [
+										{
+											"key": "page[limit]",
+											"value": "200"
+										}
+									],
+									"variable": [
+										{
+											"key": "hub_id",
+											"value": "{{hub_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Settings",
+					"item": [
+						{
+							"name": "Retrieve project settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/settings",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"settings"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Classification Systems",
+					"item": [
+						{
+							"name": "Retrieve all classification systems",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"system_id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "region",
+										"value": "US",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve a classification system",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Region",
+										"value": "US",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems/:system_id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems",
+										":system_id"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "30000000",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "-10",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "system_id",
+											"value": "{{system_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve all classifications from a classification system",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Region",
+										"value": "US",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems/:system_id/classifications",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems",
+										":system_id",
+										"classifications"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "100",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "system_id",
+											"value": "{{system_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Packages",
+					"item": [
+						{
+							"name": "Retrieve all packages",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"package_id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "100",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve a takeoff package",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Takeoff Types",
+					"item": [
+						{
+							"name": "Retrieve all takeoff types",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"takeoff_type_Id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id/takeoff-types",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id",
+										"takeoff-types"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "100",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve a takeoff type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id/takeoff-types/:takeoff_type_Id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id",
+										"takeoff-types",
+										":takeoff_type_Id"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										},
+										{
+											"key": "takeoff_type_Id",
+											"value": "{{takeoff_type_Id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Takeoff Items",
+					"item": [
+						{
+							"name": "Retrieve all takeoff items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"takeoff_item_id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id/takeoff-items",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id",
+										"takeoff-items"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve a takeoff item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id/takeoff-items/:takeoff_item_id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id",
+										"takeoff-items",
+										":takeoff_item_id"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										},
+										{
+											"key": "takeoff_item_id",
+											"value": "{{takeoff_item_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Content Views",
+					"item": [
+						{
+							"name": "Retrieve all content views",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/content-views",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"content-views"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Step 0: Reset the environment variables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Make sure to run this to set up environment variables",
+									"pm.environment.clear();",
+									"pm.environment.set(\"base_domain\",        \"https://developer.api.autodesk.com/\");",
+									"",
+									"// Forge App",
+									"pm.environment.set(\"client_id\",           \"Change to your Forge App Key\");",
+									"pm.environment.set(\"client_secret\",       \"Change to your Forge App Secret\");",
+									"",
+									"// Set the name of your hub and project",
+									"pm.environment.set(\"hub_name\",            \"Change to your hub name\");",
+									"pm.environment.set(\"project_name\",        \"Change to your project name\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "VIEW",
+						"header": [],
+						"url": {
+							"raw": "{{base_domain}}/health",
+							"host": [
+								"{{base_domain}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "data:read data:write",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://developer.api.autodesk.com/authentication/v1/gettoken",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://developer.api.autodesk.com/authentication/v1/authorize",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{client_secret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{client_id}}",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://www.getpostman.com/oauth2/callback",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "3 Legged Token",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
