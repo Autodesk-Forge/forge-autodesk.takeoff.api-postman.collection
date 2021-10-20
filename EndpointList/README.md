@@ -19,7 +19,7 @@ This folder contains a Postman Collection that includes all the current ACC Take
 
 
 ### Setup Postman environment and Authorization:
-- Please setup the following environment vialables in **Pre-request Script** and Run the endpoint of `Step 0: Reset the environment variables`: 
+- Please setup the following environment vialables in **Pre-request Script** of the endpoint `Step 0: Reset the environment variables`, then run this endpoint: 
     - client_id:     Forge App Id.
     - client_secret: Forge App Secret.
     - hub_name: The name of BIM 360 hub/account that you want to operate on.
