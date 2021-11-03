@@ -1,6 +1,6 @@
 # Autodesk Takeoff API Documentation Postman Collection
 
-This repository contains the following API collections which could help you understand the usage of ACC Takeoff APIs:
+This repository contains the following API collections which could help you understand the usage of Autodesk Takeoff APIs:
 
 - [Autodesk Takeoff API List](EndpointList), includes Takeoff API list that helps quick test or verify each endpoint.
 

@@ -25,7 +25,7 @@ This folder contains a Postman Collection that includes all the current Autodesk
 - Please setup the following environment vialables in **Pre-request Script** of the endpoint `Step 0: Reset the environment variables`, then run this endpoint: 
     - client_id:     Forge App Id.
     - client_secret: Forge App Secret.
-    - hub_name: The name of BIM 360 hub/account that you want to operate on.
+    - hub_name: The name of ACC hub/account that you want to operate on.
     - project_name:  The project name that you want to operate on.
 
 - Please add the Authorization for the collection, click **Edit Collection**, go to **Authorization** tab, make sure to use **OAuth 2.0** to get a 3 legged token of a user who has access to takeoff product, use it in the **Request Headers**.
