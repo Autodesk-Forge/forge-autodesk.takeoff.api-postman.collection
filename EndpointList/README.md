@@ -1,16 +1,16 @@
-# ACC Takeoff API List
+# Autodesk Takeoff API List
 
 ![Platforms](https://img.shields.io/badge/Web-Windows|MacOS-lightgray.svg)
 [![oAuth2](https://img.shields.io/badge/Authentication-v1-green.svg)](http://developer.autodesk.com/)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v2-green.svg)](http://developer.autodesk.com/)
-[![ACC-Takeoff](https://img.shields.io/badge/ACC%20Takeoff-v1-green.svg)](http://developer.autodesk.com/)
+[![Autodesk-Takeoff](https://img.shields.io/badge/Autodesk%20Takeoff-v1-green.svg)](http://developer.autodesk.com/)
 
 [![Postman](https://img.shields.io/badge/Postman-v8-orange.svg)](https://www.getpostman.com/)
 
 ![Beginner](https://img.shields.io/badge/Level-Beginner-green.svg)
 [![License](https://img.shields.io/:license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-This folder contains a Postman Collection that includes all the current ACC Takeoff API. The collection helps you easily test these endpoints.
+This folder contains a Postman Collection that includes all the current Autodesk Takeoff API. The collection helps you easily test these endpoints.
 
 ![Collection](Img/collection.png)
 
@@ -37,7 +37,7 @@ This folder contains a Postman Collection that includes all the current ACC Take
 ### Use the endpoints under **Run Firstly-Get Project ID** to set project id, then you can play with any Endpoint as you want.
 
 ## Tips & Tricks
-- These endpoints are mainly used to quick test|verfify based on your good understanding to ACC Takeoff product and API, the individual endpoint may not work, you need to set up the environment variables before running the Postman request.
+- These endpoints are mainly used to quick test|verfify based on your good understanding to Autodesk Takeoff product and API, the individual endpoint may not work, you need to set up the environment variables before running the Postman request.
 
 ## License
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](../LICENSE) file for full details.
