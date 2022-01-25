@@ -3,7 +3,7 @@
 ![Platforms](https://img.shields.io/badge/Web-Windows|MacOS-lightgray.svg)
 [![oAuth2](https://img.shields.io/badge/Authentication-v1-green.svg)](http://developer.autodesk.com/)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v2-green.svg)](http://developer.autodesk.com/)
-[![Autodesk-Takeoff](https://img.shields.io/badge/Autodesk%20Takeoff-v1-green.svg)](http://developer.autodesk.com/)
+[![Autodesk-Takeoff](https://img.shields.io/badge/Autodesk%20Takeoff-v1.1-green.svg)](http://developer.autodesk.com/)
 
 [![Postman](https://img.shields.io/badge/Postman-v8-orange.svg)](https://www.getpostman.com/)
 
@@ -19,7 +19,7 @@ This folder contains a Postman Collection that includes all the current Autodesk
 
 
 ### Prerequisites
-- The API mainly focus on reading all the takeoff information from ACC project, before using the following APIs, user needs to activate and setup takeoff service, upload 3D models or 2D Sheets, create a couple of packages, takeoff types and takeoff items.
+- The API mainly focus on takeoff setup and reading all the takeoff information from ACC project, before using the following APIs, user needs to activate and setup takeoff service, upload 3D models or 2D Sheets, create a couple of packages, takeoff types and takeoff items.
 
 ### Setup Postman environment and Authorization:
 - Please setup the following environment vialables in **Pre-request Script** of the endpoint `Step 0: Reset the environment variables`, then run this endpoint: 

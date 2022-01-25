@@ -189,6 +189,70 @@
 									"variable": [
 										{
 											"key": "project_id",
+											"value": "{{project_id_without_b}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update project settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{access_token}}",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "region",
+										"value": "US",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"measurementSystem\": \"METRIC\"\n}"
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/settings",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"settings"
+									],
+									"variable": [
+										{
+											"key": "project_id",
 											"value": "{{project_id}}"
 										}
 									]
@@ -415,6 +479,190 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Create classification systems",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"system_id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "region",
+										"value": "US",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Secondary Autodesk classification sample\",\n    \"type\": \"CLASSIFICATION_SYSTEM_2\",\n    \"classifications\": [\n        {\n            \"code\": \"A1010\",\n            \"parentCode\": null,\n            \"description\": \"Example classification description\",\n            \"measurementType\": null\n        },\n        {\n            \"code\": \"A1010.2020\",\n            \"parentCode\": \"A1010\",\n            \"description\": \"Example classification description\",\n            \"measurementType\": \"AREA\"\n        },\n        {\n            \"code\": \"A1010.2040\",\n            \"parentCode\": \"A1010\",\n            \"description\": \"Example classification description\",\n            \"measurementType\": \"AREA\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a classification system",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Region",
+										"value": "US",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems/:system_id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems",
+										":system_id"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "system_id",
+											"value": "{{system_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Import classifications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"// postman.setEnvironmentVariable(\"system_id\", data.results[0].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "region",
+										"value": "US",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"name\": \"Change to Standard Autodesk classification 2\",\n        \"classifications\": [\n          {\n            \"code\": \"A1010\",\n            \"parentCode\": null,\n            \"description\": \"Example classification description a\",\n            \"measurementType\": null\n          },\n\n                      {\n            \"code\": \"A1010.2080\",\n            \"parentCode\": \"A1010\",\n            \"description\": \"Example classification description 2080 aa\",\n            \"measurementType\": \"COUNT\"\n          },\n                    {\n            \"code\": \"A1010.2020\",\n            \"parentCode\": \"A1010\",\n            \"description\": \"Example classification description a\",\n            \"measurementType\": \"COUNT\"\n          }\n        ]\n}"
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/classification-systems/:systemId/classifications:import",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"classification-systems",
+										":systemId",
+										"classifications:import"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id_without_b}}"
+										},
+										{
+											"key": "systemId",
+											"value": "{{system_id}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -511,6 +759,121 @@
 								"body": {
 									"mode": "raw",
 									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages",
+										":package_id"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										},
+										{
+											"key": "package_id",
+											"value": "{{package_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a package",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"package_id\", data.results[2].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"name\": \"3rd Concrete\"\n}"
+								},
+								"url": {
+									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages",
+									"host": [
+										"{{base_domain}}"
+									],
+									"path": [
+										"construction",
+										"takeoff",
+										"v1",
+										"projects",
+										":project_id",
+										"packages"
+									],
+									"variable": [
+										{
+											"key": "project_id",
+											"value": "{{project_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a package",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"package_id\", data.results[2].id);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"name\": \"Updated Package Name\"\n}"
 								},
 								"url": {
 									"raw": "{{base_domain}}/construction/takeoff/v1/projects/:project_id/packages/:package_id",
