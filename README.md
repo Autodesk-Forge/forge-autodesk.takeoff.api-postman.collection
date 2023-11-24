@@ -1,3 +1,7 @@
+<h1>DEPRECATED</h1>
+This repository has been deprecated and all its content was moved to the new one located here https://github.com/autodesk-platform-services/aps.takeoff.api-postman.collection
+
+
 # Autodesk Takeoff API Documentation Postman Collection
 
 This repository contains the following API collections which could help you understand the usage of Autodesk Takeoff APIs:
